@@ -185,7 +185,7 @@ This project demonstrates:
 If you’d like to connect or collaborate:
 
 * Email: [tshireletsoselemela17@gmail.com](mailto:tshireletsoselemela17@gmail.com)
-* GitHub: https://github.com/Stewiecancoe
+* GitHub: https://github.com/Stewiecancode
 
 ---
 
