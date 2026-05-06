@@ -20,23 +20,47 @@ Rules:
     { role: "user", content: message }
   ];
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-4o-mini",
-      messages
-    })
-  });
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages
+      })
+    });
 
-  const data = await response.json();
+    // 🔴 Handle HTTP errors FIRST
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("OpenAI HTTP Error:", errorData);
+      throw new Error(errorData.error?.message || "Failed to fetch AI response");
+    }
 
-  if (!data.choices) {
-    throw new Error("Invalid AI response");
+    const data = await response.json();
+
+    console.log("FULL AI RESPONSE:", JSON.stringify(data, null, 2));
+
+    // 🔴 Validate response safely
+    if (!data.choices || !data.choices.length) {
+      console.error("Invalid AI response structure:", data);
+      throw new Error("Invalid AI response");
+    }
+
+    const content = data.choices[0]?.message?.content;
+
+    if (!content) {
+      console.error("Missing message content:", data);
+      throw new Error("No message content in AI response");
+    }
+
+    return content;
+
+  } catch (error) {
+    console.error("getAIResponse ERROR:", error.message);
+    throw error;
   }
-
-  return data.choices[0].message.content;
 }
