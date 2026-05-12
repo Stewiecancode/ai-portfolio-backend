@@ -1,16 +1,15 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import portfolioData from "../data/portfolio.js";
 import dotenv from "dotenv";
-
 dotenv.config();
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+import OpenAI from "openai";
+import portfolioData from "../data/portfolio.js";
+
+const client = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1",
+});
 
 export async function getAIResponse(message, history = []) {
-
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash"
-  });
 
   const systemPrompt = `
 You are a professional AI assistant for a developer portfolio.
@@ -22,20 +21,27 @@ Rules:
 - Be concise and professional
 - Help recruiters understand the developer
 - Suggest relevant projects
-- If missing info, say:
+- If info is missing, say:
 "I don't have that information"
 `;
 
-  const chat = model.startChat({
-    history: history.map(msg => ({
-      role: msg.role,
-      parts: [{ text: msg.content }]
-    }))
-  });
+  const messages = [
+    { role: "system", content: systemPrompt },
+    ...history,
+    { role: "user", content: message }
+  ];
 
-  const result = await chat.sendMessage(
-    `${systemPrompt}\n\nUser: ${message}`
-  );
+  try {
 
-  return result.response.text();
+    const response = await client.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages,
+    });
+
+    return response.choices[0].message.content;
+
+  } catch (error) {
+    console.error(error);
+    return "AI service temporarily unavailable.";
+  }
 }
