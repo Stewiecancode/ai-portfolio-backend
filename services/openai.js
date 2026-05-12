@@ -1,6 +1,11 @@
 import portfolioData from "../data/portfolio.js";
 
 export async function getAIResponse(message, history = []) {
+
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY is missing");
+  }
+
   const systemPrompt = `
 You are a professional AI assistant for a developer's portfolio.
 
@@ -21,10 +26,11 @@ Rules:
   ];
 
   try {
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -33,7 +39,6 @@ Rules:
       })
     });
 
-    // 🔴 Handle HTTP errors FIRST
     if (!response.ok) {
       const errorData = await response.json();
       console.error("OpenAI HTTP Error:", errorData);
@@ -42,22 +47,7 @@ Rules:
 
     const data = await response.json();
 
-    console.log("FULL AI RESPONSE:", JSON.stringify(data, null, 2));
-
-    // 🔴 Validate response safely
-    if (!data.choices || !data.choices.length) {
-      console.error("Invalid AI response structure:", data);
-      throw new Error("Invalid AI response");
-    }
-
-    const content = data.choices[0]?.message?.content;
-
-    if (!content) {
-      console.error("Missing message content:", data);
-      throw new Error("No message content in AI response");
-    }
-
-    return content;
+    return data.choices[0].message.content;
 
   } catch (error) {
     console.error("getAIResponse ERROR:", error.message);
