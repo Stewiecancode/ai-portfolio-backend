@@ -4,7 +4,7 @@ const portfolioData = {
   skills: ["JavaScript", "React", "Node.js", "MongoDB"],
   projects: [
     {
-      name: "AI Chatbot Portfolio",
+      name: "Kyro AI Chatbot Portfolio",
       description: "An AI assistant that answers questions about me",
       tech: ["Node.js", "OpenAI API"],
       link: "https://yourwebsite.com/chatbot"
@@ -17,8 +17,8 @@ const portfolioData = {
     }
   ],
   contact: {
-    email: "you@email.com",
-    github: "https://github.com/yourname"
+    email: "tshireletsoselemela17@email.com",
+    github: "https://github.com/Stewiecancode"
   }
 };
 
