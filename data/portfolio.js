@@ -1,7 +1,7 @@
 const portfolioData = {
   name: "Your Name",
   title: "Full Stack Developer",
-  skills: ["JavaScript", "TypeScript", "React", "Node.js", "AWS", "C#", "Unity 3d", "blender", "ssms", "sql", "ASPNET Core API"],
+  skills: ["JavaScript", "TypeScript", "React", "Node.js", "AWS", "C#", "blender", "ssms", "sql", "ASPNET Core API","Git", "Vercel", "Render", "GitHub Actions", "Unity"],
   projects: [
     {
       name: "Kyro AI Chatbot Portfolio",
