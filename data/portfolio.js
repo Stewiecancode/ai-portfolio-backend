@@ -4,16 +4,20 @@ const portfolioData = {
   skills: ["JavaScript", "TypeScript", "React", "Node.js", "AWS", "C#", "blender", "ssms", "sql", "ASPNET Core API","Git", "Vercel", "Render", "GitHub Actions", "Unity"],
   projects: [
     {
-      name: "Kyro AI Chatbot Portfolio",
-      description: "An AI assistant that answers questions about me",
-      tech: ["Node.js", "OpenAI API"],
-      link: "https://yourwebsite.com/chatbot"
+
+    name: "Icon-Make-Magic",
+    description: "It is a tool for changing file formats of images and a background remover.",
+    tech: ["React Vite", "TypeScript", "Tailwind"],
+    github: "https://github.com/Stewiecancode/icon-maker-magic",
+    link: "https://icon-maker-magic.vercel.app/",
     },
     {
-      name: "VR Training App",
-      description: "VR-based training simulation for businesses",
-      tech: ["Unity", "C#"],
-      link: "https://yourwebsite.com/vr"
+
+    name: "Jobpulse-ai",
+    description: "A production-quality SaaS frontend for analyzing software engineering job trends, salaries, skills demand, remote work statistics, and hiring activity.",
+    tech: ["React Vite", "TypeScript", "Node.js", "Tailwind"],
+    github: "https://github.com/Stewiecancode/jobpulse-ai",
+    link: "#",
     }
   ],
   contact: {
